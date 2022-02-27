@@ -11,13 +11,13 @@ namespace Editor.scripts
         static void DrawGizmoForTileMapHolder(TileMapHolder tileMapHolder, GizmoType gizmoType)
         {
             // if there is mouse state context instance (editor window is open)
-            //subscirbe to drawgizmo 
-            if (mouseStateContext != null)
+            //subscribe to draw gizmo 
+            if (mouseStateContext == null)
             {
-
-                mouseStateContext.OnDrawGizmos();
+                return;
             }
-        }
 
+            mouseStateContext.OnDrawGizmos();
+        }
     }
 }

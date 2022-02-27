@@ -6,14 +6,11 @@ namespace Editor.mono
     [ExecuteInEditMode]
     public class TileMap : MonoBehaviour
     {
+        private int _gridWidth = 5; //Width
 
-        private int _gridWidth = 5;//Width
         public int gridWidth
         {
-            get
-            {
-                return _gridWidth;
-            }
+            get { return _gridWidth; }
             set
             {
                 _gridWidth = value;
@@ -21,26 +18,23 @@ namespace Editor.mono
             }
         }
 
-        private int _gridLength = 5;//length
+        private int _gridLength = 5; //length
+
         public int gridLength
         {
-            get
-            {
-                return _gridLength;
-            }
+            get { return _gridLength; }
             set
             {
                 _gridLength = value;
                 updateCollider();
             }
         }
+
         private float _gridSize = 1;
+
         public float gridSize
         {
-            get
-            {
-                return _gridSize;
-            }
+            get { return _gridSize; }
             set
             {
                 _gridSize = value;
@@ -49,6 +43,7 @@ namespace Editor.mono
         }
 
         private BoxCollider _collider;
+
         void Awake()
         {
             //setting up  collider
@@ -59,52 +54,45 @@ namespace Editor.mono
                 _collider = col;
                 return;
             }
+
             _collider = gameObject.AddComponent<BoxCollider>();
             _collider.isTrigger = true;
-
         }
 
         //update collider dimension when field changes
-        void updateCollider()
+        private void updateCollider()
         {
-            _collider.center = new Vector3((float)_gridLength / 2, 0, (float)_gridWidth / 2) * gridSize;
+            _collider.center = new Vector3((float) _gridLength / 2, 0, (float) _gridWidth / 2) * gridSize;
             _collider.size = new Vector3(_gridLength, 0, _gridWidth) * gridSize;
         }
 
-        void OnDrawGizmos()
+        private void OnDrawGizmos()
         {
-
-
             //Draw a line of width
 
-            for (int i = 0; i <= _gridWidth; i++)
+            for (var i = 0; i <= _gridWidth; i++)
 
             {
-
-                Gizmos.DrawLine(new Vector3(0, 0, i) + transform.position, new Vector3(_gridLength, 0, i) + transform.position);
-
-
+                var position = transform.position;
+                var startingPoint = new Vector3(0, 0, i) + position;
+                var endingPoint = new Vector3(_gridLength, 0, i) + position;
+                Gizmos.DrawLine(startingPoint, endingPoint);
             }
 
 
             //Draw the length of the line
 
-            for (int i = 0; i <= _gridLength; i++)
+            for (var i = 0; i <= _gridLength; i++)
 
             {
-
-                Gizmos.DrawLine(new Vector3(i, 0, 0) + transform.position, new Vector3(i, 0, _gridWidth) + transform.position);
-
+                var position = transform.position;
+                var startingPoint = new Vector3(i, 0, 0) + position;
+                var endingPoint = new Vector3(i, 0, _gridWidth) + position;
+                Gizmos.DrawLine(startingPoint, endingPoint);
             }
 
 
-
-
             HandleUtility.Repaint();
-
-
         }
-
-
     }
 }
