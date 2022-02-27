@@ -1,21 +1,23 @@
-
-using UnityEngine;
+using Editor.mono;
 using UnityEditor;
 
-
-public class GizmoDrawer
+namespace Editor.scripts
 {
-    public static MouseStateContext mouseStateContext = null;
-    [DrawGizmo(GizmoType.Selected | GizmoType.NonSelected)]
-    static void DrawGizmoForTileMapHolder(TileMapHolder tileMapHolder, GizmoType gizmoType)
+    public static class GizmoDrawer
     {
-        // if there is mouse state context instance (editor window is open)
-        //subscirbe to drawgizmo 
-        if (mouseStateContext != null)
+        public static MouseStateContext mouseStateContext = null;
+
+        [DrawGizmo(GizmoType.Selected | GizmoType.NonSelected)]
+        static void DrawGizmoForTileMapHolder(TileMapHolder tileMapHolder, GizmoType gizmoType)
         {
+            // if there is mouse state context instance (editor window is open)
+            //subscirbe to drawgizmo 
+            if (mouseStateContext != null)
+            {
 
-            mouseStateContext.OnDrawGizmos();
+                mouseStateContext.OnDrawGizmos();
+            }
         }
-    }
 
+    }
 }

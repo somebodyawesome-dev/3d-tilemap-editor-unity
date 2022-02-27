@@ -1,25 +1,24 @@
-
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
-
-
-[ExecuteInEditMode]
-public class TileMapHolder : MonoBehaviour
+namespace Editor.mono
 {
-    public List<TileMap> tilemaps = new List<TileMap>();
-
-
-    public void getTileMaps()
+    [ExecuteInEditMode]
+    public class TileMapHolder : MonoBehaviour
     {
-        tilemaps.Clear();
-        //get all existing tilemaps
-        var arr = GetComponentsInChildren<TileMap>();
-        foreach (var item in arr)
-        {
-            tilemaps.Add(item);
-        }
-    }
+        public List<TileMap> tilemaps = new List<TileMap>();
 
+
+        public void getTileMaps()
+        {
+            tilemaps.Clear();
+            //get all existing tilemaps
+            var arr = GetComponentsInChildren<TileMap>();
+            foreach (var item in arr)
+            {
+                tilemaps.Add(item);
+            }
+        }
+
+    }
 }
