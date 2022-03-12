@@ -66,33 +66,6 @@ namespace Editor.MonoBehaviour
             _collider.size = new Vector3(_gridLength, 0, _gridWidth) * gridSize;
         }
 
-        /*private void OnDrawGizmos()
-        {
-            //Draw a line of width
-
-            for (var i = 0; i <= _gridWidth; i++)
-
-            {
-                var position = transform.position;
-                var startingPoint = new Vector3(0, 0, i) + position;
-                var endingPoint = new Vector3(_gridLength, 0, i) + position;
-                Gizmos.DrawLine(startingPoint, endingPoint);
-            }
-
-
-            //Draw the length of the line
-
-            for (var i = 0; i <= _gridLength; i++)
-
-            {
-                var position = transform.position;
-                var startingPoint = new Vector3(i, 0, 0) + position;
-                var endingPoint = new Vector3(i, 0, _gridWidth) + position;
-                Gizmos.DrawLine(startingPoint, endingPoint);
-            }
-
-
-            HandleUtility.Repaint();
-        }*/
+       
     }
 }

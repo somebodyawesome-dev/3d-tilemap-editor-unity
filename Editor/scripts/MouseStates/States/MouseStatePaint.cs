@@ -1,55 +1,9 @@
-using Editor.MonoBehaviour;
+﻿using Editor.MonoBehaviour;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor.scripts
+namespace Editor.scripts.MouseStates.States
 {
-    public abstract class MouseState
-    {
-        public readonly TileMap3d tileMap3D;
-
-        protected MouseState(TileMap3d tile)
-        {
-            tileMap3D = tile;
-        }
-
-        public abstract void onMouseClick();
-        public abstract void OnDrawGizmos();
-        public abstract void onFieldsUpdate();
-        public abstract void onDestroy();
-    }
-
-
-    /// <summary>
-    ///  default brush 
-    /// </summary>
-    public class MouseStateDefault : MouseState
-    {
-        public MouseStateDefault(TileMap3d tile) : base(tile)
-        {
-        }
-
-        public override void onMouseClick()
-        {
-            Debug.Log("default Click");
-        }
-
-        public override void OnDrawGizmos()
-        {
-        }
-
-        public override void onFieldsUpdate()
-        {
-        }
-
-        public override void onDestroy()
-        {
-        }
-    }
-
-    /// <summary>
-    ///  Paint brush
-    /// </summary>
     public class MouseStatePaint : MouseState
     {
         private GameObject currentCell;
@@ -62,6 +16,7 @@ namespace Editor.scripts
         public override void onMouseClick()
         {
             //prevent object selection in scene view
+            //stop event from propagation
             var controlId = GUIUtility.GetControlID(FocusType.Passive);
             GUIUtility.hotControl = controlId;
             Event.current.Use();
@@ -98,11 +53,10 @@ namespace Editor.scripts
             //there is no ghost cell to manipulate
             if (currentCell == null) return;
             // getting mouse position on  scene view
-            Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+            var ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
 
-            RaycastHit hit;
             //casting ray to check for colliding on the tilemap
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, 1000))
+            if (Physics.Raycast(ray.origin, ray.direction, out var hit, 1000))
             {
                 TileMap tilemap = hit.collider.GetComponent<TileMap>();
                 //if ray hit tilemap 
@@ -111,7 +65,7 @@ namespace Editor.scripts
                     //TODO: get and color the cell correspond to the mouse position
                     //TODO: offset to grid size
 
-                    Vector3 cell =
+                    var cell =
                         (hit.point - tilemap.transform.position).Truncate(Vector3.one * 0.5f * tilemap.gridSize) +
                         tileMap3D.tileMapHolder.gameObject.transform.position + tilemap.gridSize * Vector3.down;
                     //check if still on the same cell 
