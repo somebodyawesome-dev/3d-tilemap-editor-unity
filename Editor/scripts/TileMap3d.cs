@@ -185,18 +185,7 @@ namespace Editor.scripts
 
         private void addNewTileMap()
         {
-            var newTileMap = new GameObject("tilemap");
-            var tilemap = newTileMap.AddComponent<TileMap>();
-            //set up tile map parameters
-            tilemap.gridSize = _gridSize;
-            tilemap.gridLength = _gridLength;
-            tilemap.gridWidth = _gridWidth;
-
-
-            //set tile map holder as parent  
-            newTileMap.transform.parent = tileMapHolder.transform;
-            //add tilemap to list of tile maps
-            tileMapHolder.tilemaps.Add(tilemap);
+            TileMapController.addNewTileMap(_gridLength, _gridWidth, _gridSize);
         }
 
 
@@ -257,10 +246,8 @@ namespace Editor.scripts
 
         private void updateTheCurrentTileMap()
         {
-            var tilemap = tileMapHolder.tilemaps[selectedTileMapIndex];
-            tilemap.gridLength = _gridLength;
-            tilemap.gridWidth = _gridWidth;
-            tilemap.gridSize = _gridSize;
+            var tilemap = getSelectedTileMap();
+            TileMapController.updateTileMap(tilemap, _gridLength, _gridWidth, _gridSize);
         }
 
         public void OnDisable()
