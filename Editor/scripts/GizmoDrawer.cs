@@ -1,5 +1,6 @@
 using Editor.MonoBehaviour;
 using UnityEditor;
+using UnityEngine;
 
 namespace Editor.scripts
 {
@@ -18,6 +19,36 @@ namespace Editor.scripts
             }
 
             mouseStateContext.OnDrawGizmos();
+        }
+
+        [DrawGizmo(GizmoType.Selected | GizmoType.NonSelected)]
+        static void DrawGridGizmo(TileMap tileMap, GizmoType gizmoType)
+        {
+            //Draw a line of width
+
+            for (var i = 0; i <= tileMap._gridWidth; i++)
+
+            {
+                var position = tileMap.transform.position;
+                var startingPoint = new Vector3(0, 0, i) + position;
+                var endingPoint = new Vector3(tileMap._gridLength, 0, i) + position;
+                Gizmos.DrawLine(startingPoint, endingPoint);
+            }
+
+
+            //Draw the length of the line
+
+            for (var i = 0; i <= tileMap._gridLength; i++)
+
+            {
+                var position = tileMap.transform.position;
+                var startingPoint = new Vector3(i, 0, 0) + position;
+                var endingPoint = new Vector3(i, 0, tileMap._gridWidth) + position;
+                Gizmos.DrawLine(startingPoint, endingPoint);
+            }
+
+
+            HandleUtility.Repaint();
         }
     }
 }

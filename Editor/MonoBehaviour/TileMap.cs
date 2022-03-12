@@ -6,7 +6,7 @@ namespace Editor.MonoBehaviour
     [ExecuteInEditMode]
     public class TileMap : UnityEngine.MonoBehaviour
     {
-        private int _gridWidth = 5; //Width
+        internal int _gridWidth = 5; //Width
 
         public int gridWidth
         {
@@ -18,7 +18,7 @@ namespace Editor.MonoBehaviour
             }
         }
 
-        private int _gridLength = 5; //length
+        internal int _gridLength = 5; //length
 
         public int gridLength
         {
@@ -66,7 +66,7 @@ namespace Editor.MonoBehaviour
             _collider.size = new Vector3(_gridLength, 0, _gridWidth) * gridSize;
         }
 
-        private void OnDrawGizmos()
+        /*private void OnDrawGizmos()
         {
             //Draw a line of width
 
@@ -93,6 +93,6 @@ namespace Editor.MonoBehaviour
 
 
             HandleUtility.Repaint();
-        }
+        }*/
     }
 }
