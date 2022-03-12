@@ -1,4 +1,4 @@
-using Editor.mono;
+using Editor.MonoBehaviour;
 using UnityEditor;
 using UnityEngine;
 

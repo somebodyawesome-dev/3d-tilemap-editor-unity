@@ -1,10 +1,10 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor.mono
+namespace Editor.MonoBehaviour
 {
     [ExecuteInEditMode]
-    public class TileMap : MonoBehaviour
+    public class TileMap : UnityEngine.MonoBehaviour
     {
         private int _gridWidth = 5; //Width
 

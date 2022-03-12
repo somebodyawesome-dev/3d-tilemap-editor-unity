@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Editor.mono
+namespace Editor.MonoBehaviour
 {
     public static class VectorUtility
     {

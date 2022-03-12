@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Editor.mono
+namespace Editor.MonoBehaviour
 {
     [ExecuteInEditMode]
-    public class TileMapHolder : MonoBehaviour
+    public class TileMapHolder : UnityEngine.MonoBehaviour
     {
         public List<TileMap> tilemaps = new List<TileMap>();
 
