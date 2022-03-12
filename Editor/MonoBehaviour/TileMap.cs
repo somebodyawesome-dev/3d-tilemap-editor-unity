@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace Editor.MonoBehaviour
     [ExecuteInEditMode]
     public class TileMap : UnityEngine.MonoBehaviour
     {
+        internal TileMapHolder tileMapHolder;
+
         internal int _gridWidth = 5; //Width
 
         public int gridWidth
@@ -44,11 +47,11 @@ namespace Editor.MonoBehaviour
 
         private BoxCollider _collider;
 
-        void Awake()
+        private void Awake()
         {
             //setting up  collider
             //check if collider already exist
-            BoxCollider col = GetComponent<BoxCollider>();
+            var col = GetComponent<BoxCollider>();
             if (col != null)
             {
                 _collider = col;
@@ -65,7 +68,5 @@ namespace Editor.MonoBehaviour
             _collider.center = new Vector3((float) _gridLength / 2, 0, (float) _gridWidth / 2) * gridSize;
             _collider.size = new Vector3(_gridLength, 0, _gridWidth) * gridSize;
         }
-
-       
     }
 }

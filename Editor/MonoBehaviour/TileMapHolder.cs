@@ -20,5 +20,14 @@ namespace Editor.MonoBehaviour
             }
         }
 
+        public void addTilemap(TileMap tileMap)
+        {
+            if (tileMap == null || tilemaps.Contains(tileMap)) return;
+            //give tilemap its holder
+            tileMap.tileMapHolder = this;
+            //set tile map holder as parent
+            tileMap.transform.parent = transform;
+            tilemaps.Add(tileMap);
+        }
     }
 }

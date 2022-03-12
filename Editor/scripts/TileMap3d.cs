@@ -1,4 +1,5 @@
 using Editor.MonoBehaviour;
+using Editor.scripts.MouseStates;
 using Editor.scripts.MouseStates.States;
 using UnityEditor;
 using UnityEngine;
@@ -37,6 +38,15 @@ namespace Editor.scripts
         {
             get { return _gridLength; }
             set { _gridLength = value; }
+        }
+        //how many floor there is 
+
+        private int _floors = 1;
+
+        public int floors
+        {
+            get { return _floors; }
+            set { _floors = value; }
         }
 
         //Tile map holder component
@@ -143,8 +153,8 @@ namespace Editor.scripts
             _gridSize = EditorGUILayout.FloatField("Size of grid", _gridSize);
             _gridWidth = EditorGUILayout.IntField("Grid width", _gridWidth);
             _gridLength = EditorGUILayout.IntField("Grid height", _gridLength);
-
             selectedTileMapIndex = EditorGUILayout.IntField("selected tile map", selectedTileMapIndex);
+            _floors = EditorGUILayout.IntField("floors", _floors);
             EditorGUI.EndDisabledGroup();
 
             EditorGUI.BeginDisabledGroup(!inEditorMode);
@@ -186,7 +196,7 @@ namespace Editor.scripts
 
         private void addNewTileMap()
         {
-            TileMapController.addNewTileMap(_gridLength, _gridWidth, _gridSize);
+            TileMapController.createNewTileMap(_gridLength, _gridWidth, _gridSize);
         }
 
 
@@ -205,19 +215,25 @@ namespace Editor.scripts
                     return;
                 }
 
-                if (_gridSize < 0)
+                if (_floors <= 0)
+                {
+                    Debug.LogError("Invalid floor number !");
+                    return;
+                }
+
+                if (_gridSize <= 0)
                 {
                     Debug.LogError("Invalid grid size value !");
                     return;
                 }
 
-                if (_gridWidth < 0)
+                if (_gridWidth <= 0)
                 {
                     Debug.LogError("Invalid grid width value !");
                     return;
                 }
 
-                if (_gridLength < 0)
+                if (_gridLength <= 0)
                 {
                     Debug.LogError("Invalid grid Length value !");
                     return;
@@ -238,11 +254,25 @@ namespace Editor.scripts
         {
             // update the current tile map
             updateTheCurrentTileMap();
+            //update floors
+            updateFloors();
             //tell mouse stat about the change 
             if (mouseStateContext != null)
             {
-                mouseStateContext.state.onFieldsUpdate();
+                mouseStateContext.onFieldsUpdate();
             }
+        }
+
+        private void updateFloors()
+        {
+            var diff = tileMapHolder.tilemaps.Count - _floors;
+            //TODO: 2 modes 
+            //add tilemap
+            //add at the end
+
+            addNewTileMap();
+            //remove tilemap
+            //remove current or remove the last
         }
 
         private void updateTheCurrentTileMap()

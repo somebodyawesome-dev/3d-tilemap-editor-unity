@@ -6,7 +6,7 @@ namespace Editor.scripts
 {
     public abstract class MouseState
     {
-        public readonly TileMap3d tileMap3D;
+        protected readonly TileMap3d tileMap3D;
 
         protected MouseState(TileMap3d tile)
         {
