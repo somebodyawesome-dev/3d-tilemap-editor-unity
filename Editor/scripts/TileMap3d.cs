@@ -86,6 +86,9 @@ namespace Editor.scripts
         // editor mode
         private bool inEditorMode = false;
 
+        // remove mode
+        private TileMapController.RemoveMode removeMode = TileMapController.RemoveMode.LAST;
+
         //open tilemap window editor 
         [MenuItem("Tools/Tile Mapper")]
         public static void showWindow()
@@ -173,6 +176,7 @@ namespace Editor.scripts
             }
 
             GUILayout.EndHorizontal();
+            removeMode = (TileMapController.RemoveMode) EditorGUILayout.EnumPopup("tilemap removing mode", removeMode);
 
 
             EditorGUI.EndDisabledGroup();
@@ -211,6 +215,7 @@ namespace Editor.scripts
         private void initTileMapHolder()
         {
             _tileMapHolder = new GameObject("TilesMaps Holder").AddComponent<TileMapHolder>();
+            TileMapController.tileMapHolder = _tileMapHolder;
             addNewTileMap();
         }
 
@@ -219,6 +224,10 @@ namespace Editor.scripts
             TileMapController.createNewTileMap(_gridLength, _gridWidth, _gridSize);
         }
 
+        private void removeTileMap()
+        {
+            TileMapController.removeTileMap(removeMode, selectedTileMapIndex);
+        }
 
         private void onFieldChange()
         {
@@ -286,12 +295,13 @@ namespace Editor.scripts
         private void updateFloors()
         {
             var diff = _floors - tileMapHolder.tilemaps.Count;
-            Debug.Log(diff);
+
             //add tilemap
             //add at the end
             if (diff > 0)
             {
                 addNewTileMap();
+                return;
             }
 
             //remove tilemap
@@ -299,6 +309,7 @@ namespace Editor.scripts
             if (diff < 0)
             {
                 //TODO:remove tile map
+                removeTileMap();
             }
         }
 

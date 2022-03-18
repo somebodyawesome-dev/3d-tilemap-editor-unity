@@ -6,10 +6,24 @@ namespace Editor.scripts
 {
     public static class TileMapController
     {
+        public static TileMapHolder tileMapHolder = null;
+
+        //check if existence of TileMapHolder
+        private static bool checkHolder()
+        {
+            if (tileMapHolder != null) return true;
+            tileMapHolder = GameObject.FindObjectOfType<TileMapHolder>();
+            return tileMapHolder != null;
+        }
+
         public static void createNewTileMap(int length, int width, float size)
         {
-            var tileMapHolder = GameObject.FindObjectOfType<TileMapHolder>();
-            if (tileMapHolder == null) Debug.Log("TilemapHolder cant be found ");
+            tileMapHolder = GameObject.FindObjectOfType<TileMapHolder>();
+            if (!checkHolder())
+            {
+                Debug.Log("TilemapHolder cant be found ");
+                return;
+            }
 
 
             var newTileMap = new GameObject("tilemap " + tileMapHolder.tilemaps.Count.ToString());
@@ -25,6 +39,12 @@ namespace Editor.scripts
 
         public static void updateTileMap(TileMap tilemap, int length, int width, float size)
         {
+            if (!checkHolder())
+            {
+                Debug.Log("TilemapHolder cant be found ");
+                return;
+            }
+
             if (tilemap == null)
             {
                 throw new Exception("tilemap reference is null");
@@ -35,8 +55,36 @@ namespace Editor.scripts
             tilemap.gridWidth = width;
         }
 
-        public static void removeTileMap()
+        public enum RemoveMode
         {
+            CURRENT,
+            LAST
+        }
+
+        public static void removeTileMap(RemoveMode mode = RemoveMode.LAST, int index = 0)
+        {
+            if (!checkHolder())
+            {
+                Debug.Log("TilemapHolder cant be found ");
+                return;
+            }
+
+            var tilemaps = tileMapHolder.tilemaps;
+            TileMap tilemap = null;
+            if (mode == RemoveMode.LAST)
+            {
+                tilemap = tilemaps[tilemaps.Count - 1];
+            }
+
+            if (mode == RemoveMode.CURRENT)
+            {
+                tilemap = tilemaps[index];
+            }
+
+            //remove tilemap
+            if (tilemap == null) return;
+            tilemaps.Remove(tilemap);
+            GameObject.DestroyImmediate(tilemap.gameObject);
         }
     }
 }
