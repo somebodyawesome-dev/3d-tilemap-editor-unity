@@ -28,6 +28,14 @@ namespace Editor.MonoBehaviour
             //set tile map holder as parent
             tileMap.transform.parent = transform;
             tilemaps.Add(tileMap);
+            reallocateTilemap();
+        }
+
+        private void reallocateTilemap()
+        {
+            var tilemap = tilemaps[tilemaps.Count - 1];
+            var pre_tilemap = tilemaps[tilemaps.Count - 2];
+            tilemap.transform.position = pre_tilemap.transform.position + Vector3.up * tilemap.gridSize;
         }
     }
 }

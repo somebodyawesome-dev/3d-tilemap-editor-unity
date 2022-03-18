@@ -145,6 +145,8 @@ namespace Editor.scripts
             if (GUILayout.Button("Editor Mode"))
             {
                 inEditorMode = !inEditorMode;
+                //disable previous brush 
+                mouseStateContext.state = new MouseStateDefault(this);
             }
 
             //TODO: divide fields in groups
@@ -154,7 +156,25 @@ namespace Editor.scripts
             _gridWidth = EditorGUILayout.IntField("Grid width", _gridWidth);
             _gridLength = EditorGUILayout.IntField("Grid height", _gridLength);
             selectedTileMapIndex = EditorGUILayout.IntField("selected tile map", selectedTileMapIndex);
-            _floors = EditorGUILayout.IntField("floors", _floors);
+
+            var style = new GUIStyle(GUI.skin.label) {alignment = TextAnchor.MiddleCenter};
+            EditorGUILayout.LabelField("Floors", style, GUILayout.ExpandWidth(true));
+            //floor controls buttons
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("-1"))
+            {
+                _floors -= 1;
+            }
+
+            EditorGUILayout.LabelField(_floors.ToString(), style);
+            if (GUILayout.Button("+1"))
+            {
+                _floors += 1;
+            }
+
+            GUILayout.EndHorizontal();
+
+
             EditorGUI.EndDisabledGroup();
 
             EditorGUI.BeginDisabledGroup(!inEditorMode);
@@ -254,7 +274,7 @@ namespace Editor.scripts
         {
             // update the current tile map
             updateTheCurrentTileMap();
-            //update floors
+            //update floor
             updateFloors();
             //tell mouse stat about the change 
             if (mouseStateContext != null)
@@ -265,14 +285,21 @@ namespace Editor.scripts
 
         private void updateFloors()
         {
-            var diff = tileMapHolder.tilemaps.Count - _floors;
-            //TODO: 2 modes 
+            var diff = _floors - tileMapHolder.tilemaps.Count;
+            Debug.Log(diff);
             //add tilemap
             //add at the end
+            if (diff > 0)
+            {
+                addNewTileMap();
+            }
 
-            addNewTileMap();
             //remove tilemap
             //remove current or remove the last
+            if (diff < 0)
+            {
+                //TODO:remove tile map
+            }
         }
 
         private void updateTheCurrentTileMap()

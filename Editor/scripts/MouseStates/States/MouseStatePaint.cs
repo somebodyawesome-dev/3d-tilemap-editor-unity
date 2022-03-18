@@ -58,16 +58,15 @@ namespace Editor.scripts.MouseStates.States
             //casting ray to check for colliding on the tilemap
             if (Physics.Raycast(ray.origin, ray.direction, out var hit, 1000))
             {
-                TileMap tilemap = hit.collider.GetComponent<TileMap>();
+                var tilemap = hit.collider.GetComponent<TileMap>();
                 //if ray hit tilemap 
                 if (tilemap != null)
                 {
-                    //TODO: get and color the cell correspond to the mouse position
-                    //TODO: offset to grid size
-
+                    var tilemapPosition = tilemap.transform.position;
+                    //get the middle of the hit cell 
                     var cell =
-                        (hit.point - tilemap.transform.position).Truncate(Vector3.one * 0.5f * tilemap.gridSize) +
-                        tileMap3D.tileMapHolder.gameObject.transform.position + tilemap.gridSize * Vector3.down;
+                        (hit.point - tilemapPosition).Truncate(Vector3.one * 0.5f)
+                        + tilemap.gridSize * Vector3.down + tilemapPosition;
                     //check if still on the same cell 
                     //TODO: check node if its occupied
                     if (!cell.Equals(currentCell.transform.position))
