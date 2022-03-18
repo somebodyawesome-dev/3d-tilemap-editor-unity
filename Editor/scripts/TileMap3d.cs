@@ -226,7 +226,16 @@ namespace Editor.scripts
 
         private void removeTileMap()
         {
-            TileMapController.removeTileMap(removeMode, selectedTileMapIndex);
+            if (removeMode == TileMapController.RemoveMode.LAST)
+            {
+                TileMapController.removeTileMap();
+                return;
+            }
+
+            if (removeMode == TileMapController.RemoveMode.BY_INDEX)
+            {
+                TileMapController.removeTileMap(selectedTileMapIndex);
+            }
         }
 
         private void onFieldChange()

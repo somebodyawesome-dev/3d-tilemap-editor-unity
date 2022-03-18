@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Editor.scripts;
 using UnityEngine;
 
 namespace Editor.MonoBehaviour
@@ -29,6 +30,11 @@ namespace Editor.MonoBehaviour
             tileMap.transform.parent = transform;
             tilemaps.Add(tileMap);
             reallocateTilemap();
+        }
+
+        public void removeTilemap(TileMap tileMap)
+        {
+            TileMapController.removeTileMap(tileMap);
         }
 
         private void reallocateTilemap()

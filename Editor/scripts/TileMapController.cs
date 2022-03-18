@@ -57,11 +57,27 @@ namespace Editor.scripts
 
         public enum RemoveMode
         {
-            CURRENT,
-            LAST
+            BY_INDEX,
+            LAST,
+            BY_REF
         }
 
-        public static void removeTileMap(RemoveMode mode = RemoveMode.LAST, int index = 0)
+
+        public static void removeTileMap()
+        {
+            var tilemaps = tileMapHolder.tilemaps;
+            var tilemap = tilemaps[tilemaps.Count - 1];
+            //remove tilemap
+            removeTileMap(tilemap);
+        }
+
+        public static void removeTileMap(int index)
+        {
+            var tilemaps = tileMapHolder.tilemaps;
+            removeTileMap(tilemaps[index]);
+        }
+
+        public static void removeTileMap(TileMap tilemap)
         {
             if (!checkHolder())
             {
@@ -69,21 +85,8 @@ namespace Editor.scripts
                 return;
             }
 
-            var tilemaps = tileMapHolder.tilemaps;
-            TileMap tilemap = null;
-            if (mode == RemoveMode.LAST)
-            {
-                tilemap = tilemaps[tilemaps.Count - 1];
-            }
-
-            if (mode == RemoveMode.CURRENT)
-            {
-                tilemap = tilemaps[index];
-            }
-
-            //remove tilemap
             if (tilemap == null) return;
-            tilemaps.Remove(tilemap);
+            tileMapHolder.tilemaps.Remove(tilemap);
             GameObject.DestroyImmediate(tilemap.gameObject);
         }
     }

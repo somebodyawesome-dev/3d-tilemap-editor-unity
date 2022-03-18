@@ -1,4 +1,5 @@
 using System;
+using Editor.scripts;
 using UnityEditor;
 using UnityEngine;
 
@@ -67,6 +68,11 @@ namespace Editor.MonoBehaviour
         {
             _collider.center = new Vector3((float) _gridLength / 2, 0, (float) _gridWidth / 2) * gridSize;
             _collider.size = new Vector3(_gridLength, 0, _gridWidth) * gridSize;
+        }
+
+        private void OnDestroy()
+        {
+            tileMapHolder.getTileMaps();
         }
     }
 }
