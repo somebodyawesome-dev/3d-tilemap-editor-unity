@@ -1,8 +1,4 @@
-using Editor.MonoBehaviour;
-using UnityEditor;
-using UnityEngine;
-
-namespace Editor.scripts
+namespace Editor.scripts.MouseStates
 {
     public abstract class MouseState
     {

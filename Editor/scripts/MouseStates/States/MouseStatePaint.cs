@@ -99,7 +99,8 @@ namespace Editor.scripts.MouseStates.States
             }
 
             //spawn the ghost cell
-            currentCell = GameObject.Instantiate(tileMap3D.selectedTile, tileMap3D.tileMapHolder.transform, true);
+            currentCell = GameObject.Instantiate(tileMap3D.selectedTile,
+                GameObject.FindObjectOfType<TileMapHolder>().transform, true);
             currentCell.name = "Ghost Cell";
             currentCell.layer = LayerMask.NameToLayer("Ignore Raycast");
         }

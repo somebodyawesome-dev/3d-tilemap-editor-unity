@@ -1,4 +1,5 @@
 using Editor.MonoBehaviour;
+using Editor.scripts.Controllers;
 using Editor.scripts.MouseStates;
 using Editor.scripts.MouseStates.States;
 using UnityEditor;
@@ -49,19 +50,6 @@ namespace Editor.scripts
             set { _floors = value; }
         }
 
-        //Tile map holder component
-        //contains all of the tile maps
-        private TileMapHolder _tileMapHolder = null;
-
-        public TileMapHolder tileMapHolder
-        {
-            get { return _tileMapHolder; }
-            set
-            {
-                _tileMapHolder = value;
-                Debug.Log("setting up tile map holder");
-            }
-        }
 
         //selected tile 
         //might be prefab or a normal game object
@@ -87,7 +75,16 @@ namespace Editor.scripts
         private bool inEditorMode = false;
 
         // remove mode
-        private TileMapController.RemoveMode removeMode = TileMapController.RemoveMode.LAST;
+        public enum RemoveMode
+        {
+            BY_INDEX,
+            LAST
+        }
+
+        private RemoveMode removeMode = RemoveMode.LAST;
+
+        // controller facade
+        private ControllersFacade controllersFacade;
 
         //open tilemap window editor 
         [MenuItem("Tools/Tile Mapper")]
@@ -102,20 +99,8 @@ namespace Editor.scripts
 
         private void start()
         {
-            //look for tilemap holder
-            _tileMapHolder = FindObjectOfType<TileMapHolder>();
-            //if tilemap holder doesnt exist 
-            //create one
-            if (_tileMapHolder == null)
-            {
-                Debug.Log("There is no TileMap Holder");
-                Debug.Log("A TileMap Holder wil be created");
-                //create tilemap holder
-                initTileMapHolder();
-            }
-
-            //get All tileMaps
-            _tileMapHolder.getTileMaps();
+            // init controller facade
+            controllersFacade = new ControllersFacade();
 
 
             //init mouse events
@@ -176,7 +161,7 @@ namespace Editor.scripts
             }
 
             GUILayout.EndHorizontal();
-            removeMode = (TileMapController.RemoveMode) EditorGUILayout.EnumPopup("tilemap removing mode", removeMode);
+            removeMode = (RemoveMode) EditorGUILayout.EnumPopup("tilemap removing mode", removeMode);
 
 
             EditorGUI.EndDisabledGroup();
@@ -212,29 +197,24 @@ namespace Editor.scripts
             EditorGUILayout.EndToggleGroup();
         }
 
-        private void initTileMapHolder()
-        {
-            _tileMapHolder = new GameObject("TilesMaps Holder").AddComponent<TileMapHolder>();
-            TileMapController.tileMapHolder = _tileMapHolder;
-            addNewTileMap();
-        }
 
         private void addNewTileMap()
         {
-            TileMapController.createNewTileMap(_gridLength, _gridWidth, _gridSize);
+            controllersFacade.createNewTileMap(_gridLength, _gridWidth, _gridSize);
         }
+
 
         private void removeTileMap()
         {
-            if (removeMode == TileMapController.RemoveMode.LAST)
+            if (removeMode == RemoveMode.LAST)
             {
-                TileMapController.removeTileMap();
+                controllersFacade.removeTileMap();
                 return;
             }
 
-            if (removeMode == TileMapController.RemoveMode.BY_INDEX)
+            if (removeMode == RemoveMode.BY_INDEX)
             {
-                TileMapController.removeTileMap(selectedTileMapIndex);
+                controllersFacade.removeTileMap(selectedTileMapIndex);
             }
         }
 
@@ -245,7 +225,7 @@ namespace Editor.scripts
 
             try
             {
-                if (selectedTileMapIndex < 0 || selectedTileMapIndex >= tileMapHolder.tilemaps.Count)
+                if (selectedTileMapIndex < 0 || selectedTileMapIndex >= controllersFacade.getTileMapsCount())
                 {
                     Debug.LogError("please verify the number of floors");
                     Debug.LogError("or enter a valid floor index");
@@ -303,7 +283,7 @@ namespace Editor.scripts
 
         private void updateFloors()
         {
-            var diff = _floors - tileMapHolder.tilemaps.Count;
+            var diff = _floors - controllersFacade.getTileMapsCount();
 
             //add tilemap
             //add at the end
@@ -325,7 +305,7 @@ namespace Editor.scripts
         private void updateTheCurrentTileMap()
         {
             var tilemap = getSelectedTileMap();
-            TileMapController.updateTileMap(tilemap, _gridLength, _gridWidth, _gridSize);
+            controllersFacade.updateTileMap(tilemap, _gridLength, _gridWidth, _gridSize);
         }
 
         public void OnDisable()
@@ -342,7 +322,7 @@ namespace Editor.scripts
 
         public TileMap getSelectedTileMap()
         {
-            return tileMapHolder.tilemaps[selectedTileMapIndex];
+            return controllersFacade.getTileMapHolder().tilemaps[selectedTileMapIndex];
         }
     }
 }

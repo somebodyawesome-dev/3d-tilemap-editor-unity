@@ -32,13 +32,10 @@ namespace Editor.MonoBehaviour
             reallocateTilemap();
         }
 
-        public void removeTilemap(TileMap tileMap)
-        {
-            TileMapController.removeTileMap(tileMap);
-        }
 
         private void reallocateTilemap()
         {
+            if (tilemaps.Count <= 1) return;
             var tilemap = tilemaps[tilemaps.Count - 1];
             var pre_tilemap = tilemaps[tilemaps.Count - 2];
             tilemap.transform.position = pre_tilemap.transform.position + Vector3.up * tilemap.gridSize;
