@@ -75,7 +75,7 @@ namespace Editor.scripts
         private bool inEditorMode = false;
 
         // remove mode
-        public enum RemoveMode
+        private enum RemoveMode
         {
             BY_INDEX,
             LAST
@@ -84,7 +84,7 @@ namespace Editor.scripts
         private RemoveMode removeMode = RemoveMode.LAST;
 
         // controller facade
-        private ControllersFacade controllersFacade;
+        internal ControllersFacade controllersFacade;
 
         //open tilemap window editor 
         [MenuItem("Tools/Tile Mapper")]
@@ -181,6 +181,11 @@ namespace Editor.scripts
             if (GUILayout.Button("paint brush"))
             {
                 mouseStateContext.state = new MouseStatePaint(this);
+            }
+
+            if (GUILayout.Button("delete brush"))
+            {
+                mouseStateContext.state = new MouseStateRemove(this);
             }
 
             GUILayout.EndHorizontal();

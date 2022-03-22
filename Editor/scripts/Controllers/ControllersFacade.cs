@@ -1,4 +1,5 @@
 ﻿using Editor.MonoBehaviour;
+using UnityEngine;
 
 namespace Editor.scripts.Controllers
 {
@@ -7,11 +8,13 @@ namespace Editor.scripts.Controllers
         private readonly TileMapHolder tileMapHolder;
         private readonly TileMapController tileMapController;
         private TileMapHolderController tileMapHolderController;
+        private NodeController nodeController;
 
         public ControllersFacade()
         {
             this.tileMapController = new TileMapController();
             this.tileMapHolderController = new TileMapHolderController();
+            this.nodeController = new NodeController();
 
             //init TileMap Holder
             this.tileMapHolder = tileMapHolderController.initTileMapHolder();
@@ -52,6 +55,18 @@ namespace Editor.scripts.Controllers
         public void removeTileMap(TileMap tilemap)
         {
             tileMapController.removeTileMap(tileMapHolder, tilemap);
+        }
+
+        //////////////////////// Node Interface /////////////////////////
+
+        public GameObject createNode(TileMap tileMap, GameObject selectedTile, Vector3 position, Quaternion rotation)
+        {
+            return nodeController.createNode(tileMap, selectedTile, position, rotation);
+        }
+
+        public void destroyNode(Node node)
+        {
+            nodeController.destroyNode(node);
         }
     }
 }

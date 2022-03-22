@@ -99,8 +99,9 @@ namespace Editor.scripts.MouseStates.States
             }
 
             //spawn the ghost cell
-            currentCell = GameObject.Instantiate(tileMap3D.selectedTile,
-                GameObject.FindObjectOfType<TileMapHolder>().transform, true);
+            var tileMap = tileMap3D.getSelectedTileMap();
+            currentCell = tileMap3D.controllersFacade.createNode(tileMap, tileMap3D.selectedTile, Vector3.zero,
+                tileMap.transform.rotation);
             currentCell.name = "Ghost Cell";
             currentCell.layer = LayerMask.NameToLayer("Ignore Raycast");
         }
@@ -108,9 +109,7 @@ namespace Editor.scripts.MouseStates.States
         private void spawnNode(TileMap tileMap, GameObject selectedTile, Vector3 position, Quaternion rotation)
         {
             //spawn cell and attach it to its tilemap
-
-            var obj = GameObject.Instantiate(selectedTile, position, rotation);
-            obj.transform.parent = tileMap3D.getSelectedTileMap().transform;
+            tileMap3D.controllersFacade.createNode(tileMap, selectedTile, position, rotation);
         }
 
         public override void onDestroy()

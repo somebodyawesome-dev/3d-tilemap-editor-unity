@@ -1,6 +1,3 @@
-using System;
-using Editor.scripts;
-using UnityEditor;
 using UnityEngine;
 
 namespace Editor.MonoBehaviour
@@ -9,6 +6,7 @@ namespace Editor.MonoBehaviour
     public class TileMap : UnityEngine.MonoBehaviour
     {
         internal TileMapHolder tileMapHolder;
+
 
         internal int _gridWidth = 5; //Width
 
