@@ -25,6 +25,7 @@ namespace Editor.scripts.MouseStates.States
                 //if Node is in selected TileMap Delete
                 if (node != null && node.tileMap == tileMap3D.getSelectedTileMap())
                 {
+                    Debug.Log("deleting");
                     //then remove node
                     tileMap3D.controllersFacade.destroyNode(node);
                 }
