@@ -7,8 +7,8 @@ namespace Editor.scripts.Controllers
     {
         private readonly TileMapHolder tileMapHolder;
         private readonly TileMapController tileMapController;
-        private TileMapHolderController tileMapHolderController;
-        private NodeController nodeController;
+        private readonly TileMapHolderController tileMapHolderController;
+        private readonly NodeController nodeController;
 
         public ControllersFacade()
         {

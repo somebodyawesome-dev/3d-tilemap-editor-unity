@@ -7,8 +7,7 @@ namespace Editor.MonoBehaviour
     public class Node : UnityEngine.MonoBehaviour
     {
         private TileMap _tileMap;
-        private Mesh mesh;
-        private BoxCollider collider;
+        private new BoxCollider collider;
 
         public TileMap tileMap
         {
@@ -24,12 +23,12 @@ namespace Editor.MonoBehaviour
                 collider = this.gameObject.AddComponent<BoxCollider>();
             }
 
-            mesh = GetComponent<Mesh>();
             resize();
         }
 
-        public void resize(float newSize = 1)
+        public void resize()
         {
+            float newSize = _tileMap.gridSize;
             var size = GetComponent<Renderer>().bounds.size;
 
             var rescale = transform.localScale;
@@ -38,7 +37,7 @@ namespace Editor.MonoBehaviour
             rescale.y = newSize * rescale.y / size.y;
             rescale.z = newSize * rescale.z / size.z;
             transform.localScale = rescale;
-            collider.size = rescale;
+            //collider.size = GetComponent<Renderer>().bounds.size;
         }
     }
 }

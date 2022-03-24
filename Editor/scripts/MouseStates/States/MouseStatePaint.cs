@@ -64,9 +64,13 @@ namespace Editor.scripts.MouseStates.States
                 {
                     var tilemapPosition = tilemap.transform.position;
                     //get the middle of the hit cell 
+                    //Vector3.one * 0.5f * tilemap.gridSize
                     var cell =
-                        (hit.point - tilemapPosition).Truncate(Vector3.one * 0.5f)
-                        + tilemap.gridSize * Vector3.down + tilemapPosition;
+                        (hit.point - tilemapPosition).Truncate(Vector3.zero);
+                    cell.x -= cell.x % tilemap.gridSize;
+                    //cell.y -= cell.y % tilemap.gridSize;
+                    cell.z -= cell.z % tilemap.gridSize;
+                    cell += tilemapPosition + Vector3.one * 0.5f * tilemap.gridSize;
                     //check if still on the same cell 
                     //TODO: check node if its occupied
                     if (!cell.Equals(currentCell.transform.position))
