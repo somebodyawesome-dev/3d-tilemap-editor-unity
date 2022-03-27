@@ -12,7 +12,21 @@ namespace Editor.MonoBehaviour
         public TileMap tileMap
         {
             get => _tileMap;
-            set { _tileMap = value; }
+            set
+            {
+                //remove from previous tilemap
+                if (_tileMap != null)
+                {
+                    _tileMap.removeNode(this);
+                }
+
+                _tileMap = value;
+                //update new tilemap
+                if (_tileMap != null)
+                {
+                    _tileMap.addNode(this);
+                }
+            }
         }
 
         private void Start()

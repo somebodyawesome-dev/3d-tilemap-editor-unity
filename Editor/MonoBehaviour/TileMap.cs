@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Editor.MonoBehaviour
@@ -5,8 +7,27 @@ namespace Editor.MonoBehaviour
     [ExecuteInEditMode]
     public class TileMap : UnityEngine.MonoBehaviour
     {
-        internal TileMapHolder tileMapHolder;
+        private TileMapHolder _tileMapHolder;
 
+        public TileMapHolder tileMapHolder
+        {
+            get { return _tileMapHolder; }
+            set
+            {
+                //remove from previous tilemap holder
+                if (_tileMapHolder != null)
+                {
+                    _tileMapHolder.removeTileMap(this);
+                }
+
+                _tileMapHolder = value;
+                //update the new tilemap holder
+                if (_tileMapHolder != null)
+                {
+                    _tileMapHolder.addTilemap(this);
+                }
+            }
+        }
 
         internal int _gridWidth = 5; //Width
 
@@ -45,6 +66,7 @@ namespace Editor.MonoBehaviour
         }
 
         private BoxCollider _collider;
+        public List<Node> nodes = new List<Node>();
 
         private void Awake()
         {
@@ -66,6 +88,17 @@ namespace Editor.MonoBehaviour
         {
             _collider.center = new Vector3((float) _gridLength / 2, 0, (float) _gridWidth / 2) * gridSize;
             _collider.size = new Vector3(_gridLength, 0, _gridWidth) * gridSize;
+        }
+
+        public void addNode(Node node)
+        {
+            if (node == null || nodes.Contains(node)) return;
+            nodes.Add(node);
+        }
+
+        public bool removeNode(Node node)
+        {
+            return nodes.Remove(node);
         }
 
         private void OnDestroy()

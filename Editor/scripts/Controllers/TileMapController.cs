@@ -13,7 +13,7 @@ namespace Editor.scripts.Controllers
 
             //set up tile map parameters
             updateTileMap(tilemap, length, width, size);
-
+            tilemap.tileMapHolder = tileMapHolder;
 
             //add tilemap to list of tile maps
             tileMapHolder.addTilemap(tilemap);
@@ -30,8 +30,6 @@ namespace Editor.scripts.Controllers
             tilemap.gridLength = length;
             tilemap.gridWidth = width;
         }
-
-       
 
 
         public void removeTileMap(TileMapHolder tileMapHolder)

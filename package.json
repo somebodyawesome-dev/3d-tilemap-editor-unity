@@ -2,7 +2,7 @@
   "name": "com.somebodyawesome.3dtilemapeditor",
   "version": "1.0.0",
   "displayName": "3D Tilemap Editor",
-  "description": "Tilemap editorthat suppourt 3d tilemaps",
+  "description": "Tilemap editor that support 3d tilemaps",
   "unity": "2019.1",
   "unityRelease": "0b5",
   "documentationUrl": "https://example.com/",
@@ -10,13 +10,13 @@
   "licensesUrl": "https://example.com/licensing.html",
   "dependencies": {},
   "keywords": [
-    "keyword1",
-    "keyword2",
-    "keyword3"
+    "tilemap",
+    "unity",
+    "3d"
   ],
   "author": {
-    "name": "Unity",
-    "email": "unity@example.com",
-    "url": "https://www.unity3d.com"
+    "name": "Somebodyawesome",
+    "email": "luckynoob2011830@gmail.com",
+    "url": "https://github.com/somebodyawesome-dev"
   }
 }

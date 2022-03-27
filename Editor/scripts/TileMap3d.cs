@@ -145,13 +145,12 @@ namespace Editor.scripts
 
             EditorGUI.BeginDisabledGroup(inEditorMode);
             GUILayout.Label("Grid attributes", EditorStyles.boldLabel);
-            _gridSize = EditorGUILayout.FloatField("Size of grid", _gridSize);
-            _gridWidth = EditorGUILayout.IntField("Grid width", _gridWidth);
-            _gridLength = EditorGUILayout.IntField("Grid height", _gridLength);
+            GUIField.showField(ref _gridSize, "Grid Size", 1, 100);
+            GUIField.showField(ref _gridWidth, "Grid Width", 1, 999);
+            GUIField.showField(ref _gridLength, "Grid Length", 1, 999);
             // tilemap index 
-            GUIField.showField(ref selectedTileMapIndex, "Tilemap index", 0, 999);
-
-            //////////////////floor controls buttons
+            GUIField.showField(ref selectedTileMapIndex, "Tilemap index", 0, controllersFacade.getTileMapsCount() - 1);
+            //floor controls buttons
             GUIField.showField(ref _floors, "Floors", 1, 999);
 
             removeMode = (RemoveMode) EditorGUILayout.EnumPopup("tilemap removing mode", removeMode);
