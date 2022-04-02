@@ -31,9 +31,10 @@ namespace Editor.scripts
 
             {
                 var position = tileMap.transform.position;
-                var startingPoint = new Vector3(0, 0, i) + position;
-                var endingPoint = new Vector3(tileMap._gridLength, 0, i) + position;
-                Gizmos.DrawLine(startingPoint * tileMap.gridSize, endingPoint * tileMap.gridSize);
+                var startingPoint = new Vector3(0, 0, i * tileMap.gridSize) + position;
+                var endingPoint = new Vector3(tileMap._gridLength * tileMap.gridSize, 0, i * tileMap.gridSize) +
+                                  position;
+                Gizmos.DrawLine(startingPoint, endingPoint);
             }
 
 
@@ -43,9 +44,10 @@ namespace Editor.scripts
 
             {
                 var position = tileMap.transform.position;
-                var startingPoint = new Vector3(i, 0, 0) + position;
-                var endingPoint = new Vector3(i, 0, tileMap._gridWidth) + position;
-                Gizmos.DrawLine(startingPoint * tileMap.gridSize, endingPoint * tileMap.gridSize);
+                var startingPoint = new Vector3(i * tileMap.gridSize, 0, 0) + position;
+                var endingPoint = new Vector3(i * tileMap.gridSize, 0, tileMap._gridWidth * tileMap.gridSize) +
+                                  position;
+                Gizmos.DrawLine(startingPoint, endingPoint);
             }
 
 

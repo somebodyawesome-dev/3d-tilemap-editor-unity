@@ -115,6 +115,14 @@ namespace Editor.scripts
             //subscribe to SceneView events
             SceneView.duringSceneGui -= OnScene;
             SceneView.duringSceneGui += OnScene;
+
+            // get total of floors
+            floors = controllersFacade.getTileMapsCount();
+            //get tilemap params
+            var tilemap = getSelectedTileMap();
+            gridLength = tilemap.gridLength;
+            gridSize = tilemap.gridSize;
+            gridWidth = tilemap.gridWidth;
         }
 
 
@@ -292,7 +300,6 @@ namespace Editor.scripts
             //remove current or remove the last
             if (diff < 0)
             {
-                //TODO:remove tile map
                 removeTileMap();
             }
         }
@@ -306,7 +313,6 @@ namespace Editor.scripts
         public void OnDisable()
         {
             Debug.Log("tilemap tool closed !");
-
 
             mouseStateContext.onDestroy();
             GizmoDrawer.mouseStateContext = null;

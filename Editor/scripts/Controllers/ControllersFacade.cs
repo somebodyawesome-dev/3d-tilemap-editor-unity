@@ -40,6 +40,8 @@ namespace Editor.scripts.Controllers
         public void updateTileMap(TileMap tilemap, int length, int width, float size)
         {
             tileMapController.updateTileMap(tilemap, length, width, size);
+            //re position all tilemaps
+            tileMapHolder.reallocateTilemaps();
         }
 
         public void removeTileMap()

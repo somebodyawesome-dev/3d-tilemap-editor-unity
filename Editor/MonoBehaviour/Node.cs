@@ -6,7 +6,7 @@ namespace Editor.MonoBehaviour
     [ExecuteInEditMode]
     public class Node : UnityEngine.MonoBehaviour
     {
-        private TileMap _tileMap;
+        [SerializeField] private TileMap _tileMap;
         private new BoxCollider collider;
 
         public TileMap tileMap
@@ -52,6 +52,15 @@ namespace Editor.MonoBehaviour
             rescale.z = newSize * rescale.z / size.z;
             transform.localScale = rescale;
             //collider.size = GetComponent<Renderer>().bounds.size;
+        }
+
+        private void OnDestroy()
+        {
+            //remove from previous tilemap
+            if (_tileMap != null)
+            {
+                _tileMap.removeNode(this);
+            }
         }
     }
 }

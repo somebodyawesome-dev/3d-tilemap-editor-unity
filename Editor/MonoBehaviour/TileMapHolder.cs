@@ -42,7 +42,18 @@ namespace Editor.MonoBehaviour
             if (tilemaps.Count <= 1) return;
             var tilemap = tilemaps[tilemaps.Count - 1];
             var pre_tilemap = tilemaps[tilemaps.Count - 2];
-            tilemap.transform.position = pre_tilemap.transform.position + Vector3.up * tilemap.gridSize;
+            tilemap.transform.position = pre_tilemap.transform.position + Vector3.up * pre_tilemap.gridSize;
+        }
+
+        public void reallocateTilemaps()
+        {
+            if (tilemaps.Count <= 1) return;
+            for (var i = 1; i < tilemaps.Count; i++)
+            {
+                var tilemap = tilemaps[i];
+                var pre_tilemap = tilemaps[i - 1];
+                tilemap.transform.position = pre_tilemap.transform.position + Vector3.up * pre_tilemap.gridSize;
+            }
         }
     }
 }
