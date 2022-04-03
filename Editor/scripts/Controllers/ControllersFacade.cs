@@ -31,6 +31,11 @@ namespace Editor.scripts.Controllers
             return tileMapHolder.tilemaps.Count;
         }
 
+        public void hideTileMapsByIndex(int index = 0)
+        {
+            tileMapHolderController.hideTileMapsByIndex(tileMapHolder, index);
+        }
+
         /////////////////////// Tile Map Interface //////////////////////////
         public void createNewTileMap(int length = 5, int width = 5, float size = 1)
         {

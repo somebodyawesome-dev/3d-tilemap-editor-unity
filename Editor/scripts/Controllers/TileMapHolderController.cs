@@ -24,12 +24,22 @@ namespace Editor.scripts.Controllers
             return _tileMapHolder;
         }
 
-        public TileMapHolder creatTileMapHolder()
+        private TileMapHolder creatTileMapHolder()
         {
             //create tilemap holder
             var _tileMapHolder = new GameObject("TilesMaps Holder").AddComponent<TileMapHolder>();
             new TileMapController().createNewTileMap(_tileMapHolder);
             return _tileMapHolder;
+        }
+
+        public void hideTileMapsByIndex(TileMapHolder tileMapHolder, int index)
+        {
+            var count = tileMapHolder.tilemaps.Count;
+            var tilemaps = tileMapHolder.tilemaps;
+            for (var i = 0; i < count; i++)
+            {
+                tilemaps[i].gameObject.SetActive(i < index + 1);
+            }
         }
     }
 }

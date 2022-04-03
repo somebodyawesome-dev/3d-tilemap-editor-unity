@@ -12,6 +12,7 @@ namespace Editor.scripts
     {
         //TODO:implement selection of the current tilemap 
         private int selectedTileMapIndex = 0;
+        private int prevSelectedTileMapIndex = 0;
 
         //Grid attribute
 
@@ -116,6 +117,11 @@ namespace Editor.scripts
             SceneView.duringSceneGui -= OnScene;
             SceneView.duringSceneGui += OnScene;
 
+            initFields();
+        }
+
+        private void initFields()
+        {
             // get total of floors
             floors = controllersFacade.getTileMapsCount();
             //get tilemap params
@@ -123,8 +129,8 @@ namespace Editor.scripts
             gridLength = tilemap.gridLength;
             gridSize = tilemap.gridSize;
             gridWidth = tilemap.gridWidth;
+            controllersFacade.hideTileMapsByIndex();
         }
-
 
         //handle mouse events when mouse cursor positioned in the scene view
         private void OnScene(SceneView scene)
@@ -211,13 +217,14 @@ namespace Editor.scripts
         {
             if (removeMode == RemoveMode.LAST)
             {
+                if (selectedTileMapIndex == controllersFacade.getTileMapsCount() - 1) selectedTileMapIndex--;
                 controllersFacade.removeTileMap();
                 return;
             }
 
             if (removeMode == RemoveMode.BY_INDEX)
             {
-                controllersFacade.removeTileMap(selectedTileMapIndex);
+                controllersFacade.removeTileMap(selectedTileMapIndex--);
             }
         }
 
@@ -273,15 +280,28 @@ namespace Editor.scripts
 
         private void FieldChanged()
         {
+            //TODO:check if index changed
             // update the current tile map
-            updateTheCurrentTileMap();
+            if (prevSelectedTileMapIndex == selectedTileMapIndex)
+            {
+                updateTheCurrentTileMap();
+            }
+            else
+            {
+                prevSelectedTileMapIndex = selectedTileMapIndex;
+            }
+
             //update floor
             updateFloors();
+
             //tell mouse stat about the change 
             if (mouseStateContext != null)
             {
                 mouseStateContext.onFieldsUpdate();
             }
+
+            //update visibility of floors correspondingly
+            controllersFacade.hideTileMapsByIndex(selectedTileMapIndex);
         }
 
         private void updateFloors()
@@ -316,6 +336,8 @@ namespace Editor.scripts
 
             mouseStateContext.onDestroy();
             GizmoDrawer.mouseStateContext = null;
+            //enable all hidden tilemaps
+            controllersFacade.hideTileMapsByIndex(controllersFacade.getTileMapsCount());
 
             //unsubscribe to mouse events
             SceneView.duringSceneGui -= OnScene;

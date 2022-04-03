@@ -62,7 +62,6 @@ namespace Editor.MonoBehaviour
             {
                 _gridSize = value;
                 updateCollider();
-                resizeNodes();
             }
         }
 
@@ -82,7 +81,7 @@ namespace Editor.MonoBehaviour
 
             _collider = gameObject.AddComponent<BoxCollider>();
             _collider.center = new Vector3((float) 1 / 2, 0, (float) 1 / 2);
-            _collider.size = new Vector3(1, 0, 1) * gridSize;
+            _collider.size = new Vector3(1, 0.01f, 1) * gridSize;
             _collider.isTrigger = true;
         }
 
@@ -90,12 +89,15 @@ namespace Editor.MonoBehaviour
         private void updateCollider()
         {
             transform.localScale = new Vector3(_gridLength, 1, gridWidth) * gridSize;
+            resizeNodes();
         }
 
         private void resizeNodes()
         {
             foreach (var node in nodes)
             {
+                node.resize();
+                node.reposition();
             }
         }
 

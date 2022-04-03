@@ -25,8 +25,25 @@ namespace Editor.MonoBehaviour
                 if (_tileMap != null)
                 {
                     _tileMap.addNode(this);
+
+                    //get grid cell indexes to re position in case of tilemap size update
+                    var pos = (transform.position - tileMap.transform.position).Truncate(Vector3.zero);
+                    x = (pos.x - (pos.x % tileMap.gridSize)) / _tileMap.gridSize;
+                    z = (pos.z - (pos.z % tileMap.gridSize)) / _tileMap.gridSize;
                 }
             }
+        }
+
+        [SerializeField] private float x;
+        [SerializeField] private float z;
+
+
+        public void reposition()
+        {
+            if (_tileMap == null) return;
+            transform.position = new Vector3(x, 0, z) * _tileMap.gridSize +
+                                 Vector3.one * 0.5f * _tileMap.gridSize +
+                                 Vector3.up * tileMap.transform.position.y;
         }
 
         private void Start()
@@ -36,6 +53,7 @@ namespace Editor.MonoBehaviour
             {
                 collider = this.gameObject.AddComponent<BoxCollider>();
             }
+
 
             resize();
         }
@@ -51,6 +69,8 @@ namespace Editor.MonoBehaviour
             rescale.y = newSize * rescale.y / size.y;
             rescale.z = newSize * rescale.z / size.z;
             transform.localScale = rescale;
+
+
             //collider.size = GetComponent<Renderer>().bounds.size;
         }
 
