@@ -64,6 +64,13 @@ namespace Editor.scripts.Controllers
             tileMapController.removeTileMap(tileMapHolder, tilemap);
         }
 
+
+        public void updateFieldFromTileMap(TileMap tilemap, ref int length, ref int width, ref float size)
+        {
+            length = tilemap.gridLength;
+            size = tilemap.gridSize;
+            width = tilemap.gridWidth;
+        }
         //////////////////////// Node Interface /////////////////////////
 
         public GameObject createNode(TileMap tileMap, GameObject selectedTile, Vector3 position, Quaternion rotation)

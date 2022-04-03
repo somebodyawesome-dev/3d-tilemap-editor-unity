@@ -125,11 +125,14 @@ namespace Editor.scripts
             // get total of floors
             floors = controllersFacade.getTileMapsCount();
             //get tilemap params
-            var tilemap = getSelectedTileMap();
-            gridLength = tilemap.gridLength;
-            gridSize = tilemap.gridSize;
-            gridWidth = tilemap.gridWidth;
+            updateFieldsFromTileMap();
             controllersFacade.hideTileMapsByIndex();
+        }
+
+        private void updateFieldsFromTileMap()
+        {
+            var tilemap = getSelectedTileMap();
+            controllersFacade.updateFieldFromTileMap(tilemap, ref _gridLength, ref _gridWidth, ref _gridSize);
         }
 
         //handle mouse events when mouse cursor positioned in the scene view
@@ -289,6 +292,7 @@ namespace Editor.scripts
             else
             {
                 prevSelectedTileMapIndex = selectedTileMapIndex;
+                updateFieldsFromTileMap();
             }
 
             //update floor
