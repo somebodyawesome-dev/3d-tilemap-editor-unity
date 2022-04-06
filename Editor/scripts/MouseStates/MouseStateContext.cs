@@ -5,12 +5,11 @@ namespace Editor.scripts.MouseStates
     public class MouseStateContext
     {
         MouseState _state;
-        TileMap3d tileMap3D;
 
-        public MouseStateContext(MouseState _state, TileMap3d tileMap3D)
+
+        public MouseStateContext(MouseState _state)
         {
             this._state = _state;
-            this.tileMap3D = tileMap3D;
         }
 
         public MouseState state
@@ -18,7 +17,8 @@ namespace Editor.scripts.MouseStates
             get { return _state; }
             set
             {
-                _state.onDestroy();
+                //if there is mouse state call on destroy
+                _state?.onDestroy();
                 _state = value;
                 Debug.Log("Changing Mouse Stat to: " + _state.GetType().Name);
             }
@@ -26,22 +26,22 @@ namespace Editor.scripts.MouseStates
 
         public void onMouseClick()
         {
-            _state.onMouseClick();
+            _state?.onMouseClick();
         }
 
         public void OnDrawGizmos()
         {
-            _state.OnDrawGizmos();
+            _state?.OnDrawGizmos();
         }
 
         public void onDestroy()
         {
-            _state.onDestroy();
+            _state?.onDestroy();
         }
 
         public void onFieldsUpdate()
         {
-            _state.onFieldsUpdate();
+            _state?.onFieldsUpdate();
         }
     }
 }

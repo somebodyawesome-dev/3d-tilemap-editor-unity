@@ -106,7 +106,7 @@ namespace Editor.scripts
 
 
             //init mouse events
-            mouseStateContext = new MouseStateContext(new MouseStateDefault(this), this);
+            mouseStateContext = new MouseStateContext(new MouseStateDefault(this));
 
 
             //init Gizmo Drawer
