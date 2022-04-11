@@ -126,7 +126,6 @@ namespace Editor.scripts
             floors = controllersFacade.getTileMapsCount();
             //get tilemap params
             updateFieldsFromTileMap();
-            controllersFacade.hideTileMapsByIndex();
         }
 
         private void updateFieldsFromTileMap()
@@ -143,6 +142,13 @@ namespace Editor.scripts
             if (e.type == EventType.MouseDown && e.button == 0)
             {
                 mouseStateContext.onMouseClick();
+                return;
+            }
+
+            if (e.type == EventType.MouseDrag && e.button == 0)
+            {
+                mouseStateContext.onMouseClick();
+                return;
             }
         }
 
@@ -157,6 +163,16 @@ namespace Editor.scripts
                 inEditorMode = !inEditorMode;
                 //disable previous brush 
                 mouseStateContext.state = new MouseStateDefault(this);
+
+                if (inEditorMode)
+                {
+                    //update visibility of floors correspondingly
+                    controllersFacade.hideTileMapsByIndex(selectedTileMapIndex);
+                }
+                else
+                {
+                    controllersFacade.showAllTileMaps();
+                }
             }
 
 
@@ -303,9 +319,6 @@ namespace Editor.scripts
             {
                 mouseStateContext.onFieldsUpdate();
             }
-
-            //update visibility of floors correspondingly
-            controllersFacade.hideTileMapsByIndex(selectedTileMapIndex);
         }
 
         private void updateFloors()
@@ -341,7 +354,7 @@ namespace Editor.scripts
             mouseStateContext.onDestroy();
             GizmoDrawer.mouseStateContext = null;
             //enable all hidden tilemaps
-            controllersFacade.hideTileMapsByIndex(controllersFacade.getTileMapsCount());
+            controllersFacade.showAllTileMaps();
 
             //unsubscribe to mouse events
             SceneView.duringSceneGui -= OnScene;

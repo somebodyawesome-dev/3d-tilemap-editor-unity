@@ -70,7 +70,7 @@ namespace Editor.scripts.MouseStates.States
                     cell.x -= cell.x % tilemap.gridSize;
                     //cell.y -= cell.y % tilemap.gridSize;
                     cell.z -= cell.z % tilemap.gridSize;
-                    cell += tilemapPosition + Vector3.one * 0.5f * tilemap.gridSize;
+                    cell += tilemapPosition + new Vector3(1, 1, 1) * 0.5f * tilemap.gridSize;
                     //check if still on the same cell 
                     //TODO: check node if its occupied
                     if (!cell.Equals(currentCell.transform.position))
