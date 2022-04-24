@@ -85,6 +85,18 @@ namespace Editor.MonoBehaviour
             _collider.isTrigger = true;
         }
 
+        //
+        public bool itsClearCell(Node node)
+        {
+            foreach (var n in nodes)
+            {
+                if (n != node && n.x == node.x && n.z == node.z) return false;
+            }
+
+            return true;
+        }
+
+
         //update collider dimension when field changes
         private void updateCollider()
         {
@@ -114,6 +126,8 @@ namespace Editor.MonoBehaviour
 
         private void OnDestroy()
         {
+            if (tileMapHolder == null) return;
+
             tileMapHolder.getTileMaps();
         }
     }

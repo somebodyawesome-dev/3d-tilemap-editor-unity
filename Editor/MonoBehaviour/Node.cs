@@ -25,18 +25,22 @@ namespace Editor.MonoBehaviour
                 if (_tileMap != null)
                 {
                     _tileMap.addNode(this);
-
-                    //get grid cell indexes to re position in case of tilemap size update
-                    var pos = (transform.position - tileMap.transform.position).Truncate(Vector3.zero);
-                    x = (pos.x - (pos.x % tileMap.gridSize)) / _tileMap.gridSize;
-                    z = (pos.z - (pos.z % tileMap.gridSize)) / _tileMap.gridSize;
+                    updateCoordination();
                 }
             }
         }
 
-        [SerializeField] private float x;
-        [SerializeField] private float z;
+        [SerializeField] internal float x;
+        [SerializeField] internal float z;
+        public GameObject child;
 
+        public void updateCoordination()
+        {
+            //get grid cell indexes to re position in case of tilemap size update
+            var pos = (transform.position - tileMap.transform.position).Truncate(Vector3.zero);
+            x = (pos.x - (pos.x % tileMap.gridSize)) / _tileMap.gridSize;
+            z = (pos.z - (pos.z % tileMap.gridSize)) / _tileMap.gridSize;
+        }
 
         public void reposition()
         {
@@ -52,6 +56,7 @@ namespace Editor.MonoBehaviour
             if (collider == null)
             {
                 collider = this.gameObject.AddComponent<BoxCollider>();
+                collider.isTrigger = true;
             }
 
 
@@ -61,8 +66,8 @@ namespace Editor.MonoBehaviour
         public void resize()
         {
             float newSize = _tileMap.gridSize;
-            var size = GetComponent<Renderer>().bounds.size;
-
+            var size = child.GetComponent<Renderer>().bounds.size;
+            //var size = Vector3.one * newSize;
             var rescale = transform.localScale;
 
             rescale.x = newSize * rescale.x / size.x;

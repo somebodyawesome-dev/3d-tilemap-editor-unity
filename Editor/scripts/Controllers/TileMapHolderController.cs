@@ -38,7 +38,7 @@ namespace Editor.scripts.Controllers
             var tilemaps = tileMapHolder.tilemaps;
             for (var i = 0; i < count; i++)
             {
-                tilemaps[i].gameObject.SetActive(i == index);
+                tilemaps[i].gameObject.SetActive(i <= index);
             }
         }
 

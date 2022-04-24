@@ -6,6 +6,7 @@ namespace Editor.scripts.MouseStates.States
 {
     public class MouseStatePaint : MouseState
     {
+        private static readonly object _lockOnmouseClick = new object();
         private GameObject currentCell;
 
         public MouseStatePaint(TileMap3d tile) : base(tile)
@@ -37,7 +38,7 @@ namespace Editor.scripts.MouseStates.States
             {
                 var tilemap = hit.collider.GetComponent<TileMap>();
                 //if ray hit tilemap 
-                if (tilemap != null)
+                if (tilemap != null && tilemap.itsClearCell(currentCell.GetComponent<Node>()))
                 {
                     // init node and spawn it
                     spawnNode(tilemap, tileMap3D.selectedTile, currentCell.transform.position,
@@ -76,6 +77,7 @@ namespace Editor.scripts.MouseStates.States
                     if (!cell.Equals(currentCell.transform.position))
                     {
                         currentCell.transform.position = cell;
+                        currentCell.GetComponent<Node>().updateCoordination();
                     }
                 }
             }
@@ -113,7 +115,7 @@ namespace Editor.scripts.MouseStates.States
         private void spawnNode(TileMap tileMap, GameObject selectedTile, Vector3 position, Quaternion rotation)
         {
             //spawn cell and attach it to its tilemap
-            tileMap3D.controllersFacade.createNode(tileMap, selectedTile, position, rotation);
+            tileMap3D.controllersFacade.copyNode(tileMap, currentCell, position, rotation);
         }
 
         public override void onDestroy()

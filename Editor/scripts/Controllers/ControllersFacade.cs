@@ -83,6 +83,11 @@ namespace Editor.scripts.Controllers
             return nodeController.createNode(tileMap, selectedTile, position, rotation);
         }
 
+        public GameObject copyNode(TileMap tileMap, GameObject node, Vector3 position, Quaternion rotation)
+        {
+            return nodeController.copyNode(tileMap, node, position, rotation);
+        }
+
         public void destroyNode(Node node)
         {
             nodeController.destroyNode(node);
