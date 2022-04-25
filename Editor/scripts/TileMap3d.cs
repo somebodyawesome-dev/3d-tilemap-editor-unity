@@ -351,7 +351,7 @@ namespace Editor.scripts
         {
             Debug.Log("tilemap tool closed !");
 
-            mouseStateContext.onDestroy();
+            if (mouseStateContext != null) mouseStateContext.onDestroy();
             GizmoDrawer.mouseStateContext = null;
             //enable all hidden tilemaps
             controllersFacade.showAllTileMaps();

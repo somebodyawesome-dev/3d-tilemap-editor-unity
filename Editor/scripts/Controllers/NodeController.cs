@@ -44,6 +44,7 @@ namespace Editor.scripts.Controllers
             var obj = GameObject.Instantiate(node.gameObject, position, rotation);
             obj.transform.parent = tileMap.transform;
             obj.GetComponent<Node>().tileMap = tileMap;
+            obj.layer = LayerMask.NameToLayer("Default");
 
             return obj;
         }
