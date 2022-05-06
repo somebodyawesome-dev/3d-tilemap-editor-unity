@@ -53,7 +53,7 @@ namespace Editor.MonoBehaviour
             }
         }
 
-        private float _gridSize = 1;
+        [SerializeField] private float _gridSize;
 
         public float gridSize
         {
@@ -81,7 +81,7 @@ namespace Editor.MonoBehaviour
 
             _collider = gameObject.AddComponent<BoxCollider>();
             _collider.center = new Vector3((float) 1 / 2, 0, (float) 1 / 2);
-            _collider.size = new Vector3(1, 0.01f, 1) * gridSize;
+            _collider.size = new Vector3(1, 0.01f, 1) * 1; //TODO fix this
             _collider.isTrigger = true;
         }
 
