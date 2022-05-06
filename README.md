@@ -51,7 +51,7 @@
 [![Watch the video](https://img.youtube.com/vi/ub6cY8s6PK0/maxresdefault.jpg)](https://youtu.be/ub6cY8s6PK0)
 
 A 3D Tile map Package helps developers create levels easily in 3d projects. Allowing developers to place objects or "
-Tiles" in scene view just by clicking, introducing fully 3d tile map support from gizmo visualisation to multiple floor
+Tiles" in scene view just by clicking, introducing fully 3d tile map support from gizmo visualization to multiple floor
 support.
 
 Here's why:
